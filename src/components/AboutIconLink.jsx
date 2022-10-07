@@ -1,4 +1,4 @@
-import { FaQuestion, FaReceipt } from "react-icons/fa";
+import { FaQuestion } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function AboutIconLink() {
