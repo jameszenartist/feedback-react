@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+:root {
+  --main-or1: #FF580F;
+  --main-or2: #FF7E26;
+  --main-or3: #FF9C59;
+  --main-or4: #FFA472;
+  --main-or5: #FFC99D;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,10 +15,10 @@
 }
 
 body {
-  height: 100vh;
+  height: 100%;
   font-family: 'Poppins', sans-serif;
-  background-color: #202142;
-  color: #fff;
+  background: linear-gradient(-45deg, var(--main-or4) 0%, var(--main-or1) 120%);
+  color: var(--main-or5);
   line-height: 1.6;
 }
 
@@ -22,7 +30,9 @@ ul {
   max-width: 768px;
   margin: auto;
   padding: 0 20px;
+  color: #fff;
 }
+
 
 header {
   height: 70px;
@@ -34,18 +44,15 @@ header {
 }
 
 .card {
-  background-color: #fff;
-  color: #333;
+  background: rgba( 255, 255, 255, 0.2 );  
+  border: 1px solid rgba( 255, 255, 255, 0.2 );
+  color: #fff;
   border-radius: 15px;
   padding: 40px 50px;
   margin: 20px 0;
   position: relative;
 }
 
-.card.reverse {
-  background-color: rgba(0, 0, 0, 0.4);
-  color: #fff;
-}
 
 .card h2 {
   font-size: 22px;
@@ -63,14 +70,14 @@ header {
 .rating li,
 .num-display {
   position: relative;
-  background: #f4f4f4;
+  background: var(--main-or4);
   width: 50px;
   height: 50px;
   padding: 10px;
   text-align: center;
   border-radius: 50%;
   font-size: 19px;
-  border: 1px #eee solid;
+  border: 1px #fff solid;
   transition: 0.3s;
 }
 
@@ -88,7 +95,7 @@ header {
 
 .rating li:hover,
 .num-display {
-  background: #ff6a95;
+  background: var(--main-or2);
   color: #fff;
 }
 
@@ -97,26 +104,38 @@ header {
 }
 
 [type='radio']:checked ~ label {
-  background: #ff6a95;
+  background: var(--main-or2);
   color: #fff;
 }
 
 .input-group {
+  background: var(--main-or4);
   display: flex;
   flex-direction: row;
-  border: 1px solid #ccc;
+  border: 1px solid #fff;
   padding: 8px 10px;
   border-radius: 8px;
 }
 
 input {
+  background: none;
   flex-grow: 2;
   border: none;
   font-size: 16px;
 }
 
+input::placeholder {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
 input:focus {
   outline: none;
+  color: #fff;  
+}
+
+input:focus::placeholder {
+  color: transparent;
 }
 
 .feedback-stats {
@@ -148,30 +167,27 @@ input:focus {
 
 .btn {
   color: #fff;
-  border: 0;
+  border: 1px solid #fff;
   border-radius: 8px;
   color: #fff;
   width: 100px;
   height: 40px;
   cursor: pointer;
+  font-size: 1.2rem;
+  background: var(--main-or4);
+
 }
 
-.btn-primary {
-  background-color: #202142;
-}
-
-.btn-secondary {
-  background: #ff6a95;
-}
 
 .btn:hover {
+  background: var(--main-or2);
   transform: scale(0.98);
   opacity: 0.9;
 }
 
 .btn:disabled {
-  background-color: #cccccc;
-  color: #333;
+  background-color: none;
+  color: #fff;
   cursor: auto;
 }
 
@@ -183,26 +199,27 @@ input:focus {
 .message {
   padding-top: 10px;
   text-align: center;
-  color: rebeccapurple;
+  color: var(--main-or5);
 }
 
 /* FIX: Remove position: absolute to keep about icon at the bottom of the
- * document */
+  document */
 .about-link {
   display: flex;
   justify-content: flex-end;
 }
 
 /* FIX: Remove position: absolute to keep about icon at the bottom of the
- * document */
-.about-link a {
+  document */
+.about-link a,.back-home  {
   color: #fff;
-  cursor: pointer;
+  cursor: pointer;  
 }
 
 .about-link a:hover {
-  color: #ff6a95;
+  color: var(--main-or2);
 }
+
 
 .about h1 {
   margin-bottom: 20px;
@@ -210,6 +227,7 @@ input:focus {
 
 .about p {
   margin: 10px 0;
+  
 }
 
 @media (max-width: 600px) {
