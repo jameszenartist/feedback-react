@@ -15,7 +15,7 @@
 }
 
 body {
-  height: 100%;
+  height: 100vh;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(-45deg, var(--main-or4) 0%, var(--main-or1) 120%);
   color: var(--main-or5);
