@@ -231,6 +231,11 @@ input:focus::placeholder {
 }
 
 @media (max-width: 600px) {
+
+body{
+  height: 100%;
+}
+
   .rating li {
     margin: 10px 3px;
   }
