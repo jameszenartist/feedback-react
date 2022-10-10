@@ -33,7 +33,7 @@ export const FeedbackProvider = ({ children }) => {
     // setFeedback(data);
     // setIsLoading(false);
     const data = await db.list();
-    console.log("the data is: ", data);
+
     setFeedback(Object.values(data));
     setIsLoading(false);
   };
