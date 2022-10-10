@@ -3,8 +3,8 @@ import easyDB from "easydb-io";
 import { v4 as uuid } from "uuid";
 
 const db = easyDB({
-  database: REACT_APP_EASYDB_DB,
-  token: REACT_APP_EASYDB_TOKEN,
+  database: `REACT_APP_EASYDB_DB`,
+  token: `REACT_APP_EASYDB_TOKEN`,
 });
 
 const FeedbackContext = createContext();
