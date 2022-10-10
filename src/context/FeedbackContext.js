@@ -1,9 +1,10 @@
 import { createContext, useState, useEffect } from "react";
 import easyDB from "easydb-io";
 import { v4 as uuid } from "uuid";
+
 const db = easyDB({
-  database: process.env.REACT_APP_EASYDB_DB,
-  token: process.env.REACT_APP_EASYDB_TOKEN,
+  database: process.env.local.REACT_APP_EASYDB_DB,
+  token: process.env.local.REACT_APP_EASYDB_TOKEN,
 });
 
 const FeedbackContext = createContext();
