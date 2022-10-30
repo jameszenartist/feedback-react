@@ -1,11 +1,23 @@
 import { createContext, useState, useEffect } from "react";
-import easyDB from "easydb-io";
 import { v4 as uuid } from "uuid";
 
-const db = easyDB({
-  database: process.env.REACT_APP_EASYDB_DB,
-  token: process.env.REACT_APP_EASYDB_TOKEN,
-});
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
 const FeedbackContext = createContext();
 
@@ -24,17 +36,12 @@ export const FeedbackProvider = ({ children }) => {
 
   // Fetch feedback
   const fetchFeedback = async () => {
-    // const response = await fetch(
-    //   //url syntax from json-server:
-    //   `/feedback?_sort=id&_order=desc`
-    // );
-    // const data = await response.json();
-
-    // setFeedback(data);
-    // setIsLoading(false);
-    const data = await db.list();
-
-    setFeedback(Object.values(data));
+    const response = await fetch(
+      //url syntax from json-server:
+      `/feedback?_sort=id&_order=desc`
+    );
+    const data = await response.json();
+    setFeedback(data);
     setIsLoading(false);
   };
 
