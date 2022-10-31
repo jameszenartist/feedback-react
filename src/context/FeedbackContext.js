@@ -1,30 +1,20 @@
+import { db } from "../firebase-config.js";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { createContext, useState, useEffect } from "react";
 import { v4 as uuid } from "uuid";
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
-
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-};
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-
 const FeedbackContext = createContext();
-
 export const FeedbackProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [feedback, setFeedback] = useState([]);
-
+  const feedbackData = collection(db, "feedback");
   const [feedbackEdit, setFeedbackEdit] = useState({
     item: {},
     edit: false,
@@ -36,12 +26,16 @@ export const FeedbackProvider = ({ children }) => {
 
   // Fetch feedback
   const fetchFeedback = async () => {
-    const response = await fetch(
-      //url syntax from json-server:
-      `/feedback?_sort=id&_order=desc`
-    );
-    const data = await response.json();
-    setFeedback(data);
+    // const response = await fetch(
+    //   //url syntax from json-server:
+    //   `/feedback?_sort=id&_order=desc`
+    // );
+    // const data = await response.json();
+    // setFeedback(data);
+    // setIsLoading(false);
+    const response = await getDocs(feedbackData);
+
+    setFeedback(response.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     setIsLoading(false);
   };
 
@@ -54,13 +48,13 @@ export const FeedbackProvider = ({ children }) => {
     //   },
     //   body: JSON.stringify(newFeedback),
     // });
-
     // const data = await response.json();
     // setFeedback([data, ...feedback]);
+    // const id = uuid();
+    // const feedbackToAdd = { ...newFeedback, id };
     const id = uuid();
     const feedbackToAdd = { ...newFeedback, id };
-    await db.put(id, feedbackToAdd);
-
+    await addDoc(feedbackData, feedbackToAdd);
     setFeedback([...feedback, feedbackToAdd]);
   };
 
@@ -73,8 +67,9 @@ export const FeedbackProvider = ({ children }) => {
     //   setFeedback(feedback.filter((item) => item.id !== id));
     // }
     if (window.confirm("Are you sure you want to delete?")) {
-      await db.delete(id);
-
+      // await db.delete(id);
+      const deleteItem = doc(db, "feedback", id);
+      await deleteDoc(deleteItem);
       setFeedback(feedback.filter((item) => item.id !== id));
     }
   };
@@ -93,10 +88,9 @@ export const FeedbackProvider = ({ children }) => {
     // setFeedback(
     //   feedback.map((item) => (item.id === id ? { ...item, ...data } : item))
     // );
-
+    const updateFeedbackItem = doc(db, "feedback", id);
     const updatedFeedback = { ...updItem, id };
-    await db.put(id, updatedFeedback);
-
+    await updateDoc(updateFeedbackItem, updatedFeedback);
     setFeedback(
       feedback.map((item) => (item.id === id ? updatedFeedback : item))
     );
